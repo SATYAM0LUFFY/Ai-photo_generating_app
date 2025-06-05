@@ -80,13 +80,13 @@ router.post(
           console.log("Razorpay order created successfully:", order);
           res.json(order);
           return;
-        } catch (error) {
-          console.error("Razorpay error:", error);
+        } catch (err) {
+          console.error("Razorpay error:", err);
           res.status(500).json({
             message: "Error creating Razorpay order",
             details:
               process.env.NODE_ENV === "development"
-                ? (error as Error).message
+                ? (err as Error).message
                 : undefined,
           });
           return;
@@ -95,11 +95,11 @@ router.post(
 
       res.status(400).json({ message: "Invalid payment method" });
       return;
-    } catch (error) {
-      console.error("Payment creation error:", error);
+    } catch (err) {
+      console.error("Payment creation error:", err);
       res.status(500).json({
         message: "Error creating payment session",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: err instanceof Error ? err.message : "Unknown error",
       });
       return;
     }
